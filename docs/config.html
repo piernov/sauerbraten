@@ -39,9 +39,6 @@
 <a href="#_minus_hn"><tt>-hN</tt></a>
 </li>
 <li>
-<a href="#_minus_bn"><tt>-bN</tt></a>
-</li>
-<li>
 <a href="#_minus_zn"><tt>-zN</tt></a>
 </li>
 <li>
@@ -51,16 +48,7 @@
 <a href="#_minus_vn"><tt>-vN</tt></a>
 </li>
 <li>
-<a href="#_minus_sn"><tt>-sN</tt></a>
-</li>
-<li>
 <a href="#_minus_t"><tt>-t</tt></a>
-</li>
-<li>
-<a href="#_minus_f"><tt>-f</tt></a>
-</li>
-<li>
-<a href="#_minus_fn"><tt>-fN</tt></a>
 </li>
 <li>
 <a href="#_minus_qs"><tt>-qS</tt></a>
@@ -649,11 +637,6 @@ Sets the screen resolution width to N (default: 640).
 Sets the screen resolution height to N (default: 480).
 </p>
 
-<pre id="_minus_bn">-bN</pre>
-<p>
-Sets the screen depth to N bits per pixel.
-</p>
-
 <pre id="_minus_zn">-zN</pre>
 <p>
 Sets the z-buffer precision to N bits. This should be at least 24 or you may experience depth problems.
@@ -669,25 +652,9 @@ Sets FSAA (Full Scene AntiAliasing) to N samples, i.e. -a4 is 4xFSAA
 Sets v-sync to N (N=1 to enable or N=0 to disable).
 </p>
 
-<pre id="_minus_sn">-sN</pre>
-<p>
-Sets stencil buffer bits to N (N>=1 to enable or N=0 to disable).
-</p> 
-
 <pre id="_minus_t">-t</pre>
 <p>
 Sets Sauerbaten to run windowed.
-</p>
-
-<pre id="_minus_f">-f</pre>
-<pre id="_minus_fn">-fN</pre>
-<p>
-When used alone, "-f" forces the renderpath to the old fixed function pipeline (no shaders), otherwise it sets the shader precision
-to N (lower = faster). 0 disables shaders, 1 uses the fastest/lowest precision the OpenGL driver offers (default), 2 uses the OpenGL driver's defaults,
-and 3 is the nicest/slowest precision. The effects of 1-3 will vary with different card/driver combos. However, 2 and 3 should be avoided
-unless you are experiencing trouble with the defaults, as they will only slow rendering down. 4 forces the engine to use the GLSL-only renderpath,
-which, depending on driver support, may run better or worse than the assembly shader path enabled by options 1-3; only use if the assembly shader
-paths are not working for your card, and you are reasonably certain the GLSL support is better.
 </p>
 
 <pre id="_minus_qs">-qS</pre>
