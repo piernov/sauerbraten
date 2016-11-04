@@ -1091,15 +1091,24 @@ static bool compileblockstr(vector<uint> &code, const char *str, const char *end
             case '\r': str++; break;
             case '\"':
             {
-                const char *start = str; 
+                const char *start = str;
                 str = parsestring(str+1);
                 if(*str=='\"') str++;
                 memcpy(&buf[len], start, str-start);
                 len += str-start;
                 break;
             }
-            case '/': 
-                if(str[1] == '/') str += strcspn(str, "\n\0");
+            case '/':
+                if(str[1] == '/')
+                {
+                    size_t comment = strcspn(str, "\n\0");
+                    if (iscubepunct(str[2]))
+                    {
+                        memcpy(&buf[len], str, comment);
+                        len += comment;
+                    }
+                    str += comment;
+                }
                 else buf[len++] = *str++;
                 break;
             case '@':
