@@ -57,9 +57,10 @@ Shader *generateshader(const char *name, const char *fmt, ...)
     if(!s)
     {
         defvformatstring(cmd, fmt, fmt);
+        bool wasstandard = standardshaders;
         standardshaders = true;
         execute(cmd); 
-        standardshaders = false;
+        standardshaders = wasstandard;
         s = name ? lookupshaderbyname(name) : NULL;
         if(!s) s = nullshader;
     }
