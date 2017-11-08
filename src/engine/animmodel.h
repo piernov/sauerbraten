@@ -126,6 +126,8 @@ struct animmodel : model
 
         void setshaderparams(mesh *m, const animstate *as)
         {
+            if(!Shader::lastshader) return;
+
             float mincolor = as->cur.anim&ANIM_FULLBRIGHT ? fullbrightmodels/100.0f : 0.0f;
             if(fullbright)
             {

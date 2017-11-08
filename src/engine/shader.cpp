@@ -1443,6 +1443,7 @@ void cleanupshaders()
 {
     cleanuppostfx(true);
 
+    loadedshaders = false;
     nullshader = hudshader = hudnotextureshader = textureshader = notextureshader = nocolorshader = foggedshader = foggednotextureshader = stdworldshader = NULL;
     enumerate(shaders, Shader, s, s.cleanup());
     Shader::lastshader = NULL;
