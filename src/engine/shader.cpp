@@ -999,7 +999,7 @@ void defershader(int *type, const char *name, const char *contents)
 
 void Shader::force()
 {
-    if(!deferred()) return;
+    if(!deferred() || !defer) return;
         
     char *cmd = defer;
     defer = NULL;
