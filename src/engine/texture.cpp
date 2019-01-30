@@ -438,15 +438,25 @@ void texreorient(ImageData &s, bool flipx, bool flipy, bool swapxy, int type = T
     s.replace(d);
 }
 
+extern const texrotation texrotations[8] =
+{
+    { false, false, false }, // 0: default
+    { false,  true,  true }, // 1: 90 degrees
+    {  true,  true, false }, // 2: 180 degrees
+    {  true, false,  true }, // 3: 270 degrees
+    {  true, false, false }, // 4: flip X
+    { false,  true, false }, // 5: flip Y
+    { false, false,  true }, // 6: transpose
+    {  true,  true,  true }, // 7: flipped transpose
+};
+
 void texrotate(ImageData &s, int numrots, int type = TEX_DIFFUSE)
 {
-    // 1..3 rotate through 90..270 degrees, 4 flips X, 5 flips Y, 6 tranpose, 7 flipped transpose
     if(numrots>=1 && numrots<=7)
-        texreorient(s,
-            (numrots>=2 && numrots<=4) || numrots==7, // flip X on 180/270 degrees
-            numrots<=2 || numrots==5 || numrots==7, // flip Y on 90/180 degrees
-            (numrots&5)==1 || numrots>=6,           // swap X/Y on 90/270 degrees
-            type);
+    {
+        const texrotation &r = texrotations[numrots];
+        texreorient(s, r.flipx, r.flipy, r.swapxy, type);
+    }
 }
 
 void texoffset(ImageData &s, int xoffset, int yoffset)
@@ -1688,7 +1698,7 @@ static void clampvslotoffset(VSlot &dst, Slot *slot = NULL)
         Texture *t = slot->sts[0].t;
         int xs = t->xs, ys = t->ys;
         if(t->type & Texture::MIRROR) { xs *= 2; ys *= 2; }
-        if((dst.rotation&5)==1 || dst.rotation>=6) swap(xs, ys);
+        if(texrotations[dst.rotation].swapxy) swap(xs, ys);
         dst.offset.x %= xs; if(dst.offset.x < 0) dst.offset.x += xs;
         dst.offset.y %= ys; if(dst.offset.y < 0) dst.offset.y += ys;
     }
@@ -2426,7 +2436,7 @@ void forcecubemapload(GLuint tex)
     if(depthtest) glEnable(GL_DEPTH_TEST);
 }
 
-cubemapside cubemapsides[6] =
+extern const cubemapside cubemapsides[6] =
 {
     { GL_TEXTURE_CUBE_MAP_NEGATIVE_X, "lf", true,  true,  true  },
     { GL_TEXTURE_CUBE_MAP_POSITIVE_X, "rt", false, false, true  },
@@ -2525,7 +2535,7 @@ Texture *cubemaploadwildcard(Texture *t, const char *name, bool mipit, bool msg,
     loopi(6)
     {
         ImageData &s = surface[i];
-        cubemapside &side = cubemapsides[i];
+        const cubemapside &side = cubemapsides[i];
         texreorient(s, side.flipx, side.flipy, side.swapxy);
         if(s.compressed)
         {

@@ -564,7 +564,7 @@ void reduceslope(ivec &n)
 }
 
 // [rotation][dimension]
-vec orientation_tangent[8][3] =
+extern const vec orientation_tangent[8][3] =
 {
     { vec(0,  1,  0), vec( 1, 0,  0), vec( 1,  0, 0) },
     { vec(0,  0, -1), vec( 0, 0, -1), vec( 0,  1, 0) },
@@ -575,7 +575,7 @@ vec orientation_tangent[8][3] =
     { vec(0,  0, -1), vec( 0, 0, -1), vec( 0,  1, 0) },
     { vec(0,  0,  1), vec( 0, 0,  1), vec( 0, -1, 0) },
 };
-vec orientation_bitangent[8][3] =
+extern const vec orientation_bitangent[8][3] =
 {
     { vec(0,  0, -1), vec( 0, 0, -1), vec( 0,  1, 0) },
     { vec(0, -1,  0), vec(-1, 0,  0), vec(-1,  0, 0) },
@@ -742,18 +742,18 @@ void addgrasstri(int face, vertex *verts, int numv, ushort texture, ushort lmid)
 static inline void calctexgen(VSlot &vslot, int dim, vec4 &sgen, vec4 &tgen)
 {
     Texture *tex = vslot.slot->sts.empty() ? notexture : vslot.slot->sts[0].t;
-    bool swapxy = (vslot.rotation&5)==1 || vslot.rotation>=6;
+    const texrotation &r = texrotations[vslot.rotation];
     float k = TEX_SCALE/vslot.scale,
-          xs = (vslot.rotation>=2 && vslot.rotation<=4) || vslot.rotation==7 ? -tex->xs : tex->xs,
-          ys = (vslot.rotation>=1 && vslot.rotation<=2) || vslot.rotation==5 || vslot.rotation==7 ? -tex->ys : tex->ys,
+          xs = r.flipx ? -tex->xs : tex->xs,
+          ys = r.flipy ? -tex->ys : tex->ys,
           sk = k/xs, tk = k/ys,
-          soff = -(swapxy ? vslot.offset.y : vslot.offset.x)/xs,
-          toff = -(swapxy ? vslot.offset.x : vslot.offset.y)/ys;
+          soff = -(r.swapxy ? vslot.offset.y : vslot.offset.x)/xs,
+          toff = -(r.swapxy ? vslot.offset.x : vslot.offset.y)/ys;
     static const int si[] = { 1, 0, 0 }, ti[] = { 2, 2, 1 };
     int sdim = si[dim], tdim = ti[dim];
     sgen = vec4(0, 0, 0, soff); 
     tgen = vec4(0, 0, 0, toff);
-    if(swapxy)
+    if(r.swapxy)
     {
         sgen[tdim] = (dim <= 1 ? -sk : sk);
         tgen[sdim] = tk;
