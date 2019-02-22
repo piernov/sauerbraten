@@ -218,8 +218,19 @@ namespace game
         genprivkey(secret, privkey, pubkey);
         conoutf("private key: %s", privkey.getbuf());
         conoutf("public key: %s", pubkey.getbuf());
+        result(privkey.getbuf());
     }
     COMMAND(genauthkey, "s");
+
+    void getpubkey(const char *desc)
+    {
+        authkey *k = findauthkey(desc);
+        if(!k) { if(desc[0]) conoutf("no authkey found: %s", desc); else conoutf("no global authkey found"); return; }
+        vector<char> pubkey;
+        if(!calcpubkey(k->key, pubkey)) { conoutf("failed calculating pubkey"); return; }
+        result(pubkey.getbuf());
+    }
+    COMMAND(getpubkey, "s");
 
     void saveauthkeys()
     {
