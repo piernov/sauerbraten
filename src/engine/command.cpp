@@ -3095,7 +3095,7 @@ ICOMMAND(rndstr, "i", (int *len),
     loopi((n+3)/4)
     {
         uint r = randomMT();
-        loopj(4)
+        loopj(min(n - i*4, 4))
         {
             s[i*4 + j] = (r%255) + 1;
             r /= 255;
