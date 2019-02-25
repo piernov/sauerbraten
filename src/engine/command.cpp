@@ -3092,12 +3092,12 @@ ICOMMAND(rndstr, "i", (int *len),
 {
     int n = clamp(*len, 0, 10000);
     char *s = newstring(n);
-    loopi((n+3)/4)
+    for(int i = 0; i < n;)
     {
         uint r = randomMT();
-        loopj(min(n - i*4, 4))
+        for(int j = min(i + 4, n); i < j; i++)
         {
-            s[i*4 + j] = (r%255) + 1;
+            s[i] = (r%255) + 1;
             r /= 255;
         }
     }
