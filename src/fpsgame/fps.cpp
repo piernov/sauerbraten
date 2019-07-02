@@ -147,7 +147,7 @@ namespace game
 
     bool allowthirdperson()
     {
-        return !multiplayer(false) || player1->state==CS_SPECTATOR || player1->state==CS_EDITING;
+        return !multiplayer(false) || player1->state==CS_SPECTATOR || player1->state==CS_EDITING || m_edit;
     }
 
     bool detachcamera()
