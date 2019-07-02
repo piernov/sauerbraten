@@ -128,7 +128,7 @@ namespace game
 
     fpsent *hudplayer()
     {
-        if(thirdperson) return player1;
+        if(thirdperson && allowthirdperson()) return player1;
         fpsent *target = followingplayer();
         return target ? target : player1;
     }
@@ -143,6 +143,11 @@ namespace game
             player1->o = target->o;
             player1->resetinterp();
         }
+    }
+
+    bool allowthirdperson()
+    {
+        return !multiplayer(false) || player1->state==CS_SPECTATOR || player1->state==CS_EDITING;
     }
 
     bool detachcamera()
