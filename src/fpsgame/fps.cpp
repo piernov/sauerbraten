@@ -717,6 +717,18 @@ namespace game
         return teamcolor(name, team && isteam(team, player1->team), alt);
     }
 
+    VARP(teamsounds, 0, 1, 1);
+
+    void teamsound(bool sameteam, int n, const vec *loc)
+    {
+        playsound(n, loc, NULL, teamsounds ? (m_teammode && sameteam ? SND_USE_ALT : SND_NO_ALT) : 0);
+    }
+
+    void teamsound(fpsent *d, int n, const vec *loc)
+    {
+        teamsound(isteam(d->team, player1->team), n, loc);
+    }
+
     void suicide(physent *d)
     {
         if(d==player1 || (d->type==ENT_PLAYER && ((fpsent *)d)->ai))
