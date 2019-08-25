@@ -1542,7 +1542,8 @@ namespace game
                 if(!actor) break;
                 actor->frags = frags;
                 if(m_teammode) setteaminfo(actor->team, tfrags);
-                if(actor!=player1 && (!cmode || !cmode->hidefrags()))
+                extern int hidefrags;
+                if(actor!=player1 && (!cmode || !cmode->hidefrags() || !hidefrags))
                 {
                     defformatstring(ds, "%d", actor->frags);
                     particle_textcopy(actor->abovehead(), ds, PART_TEXT, 2000, 0x32FF64, 4.0f, -8);
