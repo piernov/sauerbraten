@@ -11,6 +11,7 @@ namespace game
     VARP(showspectators, 0, 1, 1);
     VARP(highlightscore, 0, 1, 1);
     VARP(showconnecting, 0, 0, 1);
+    VARP(hidefrags, 0, 1, 1);
 
     static hashset<teaminfo> teaminfos;
 
@@ -226,7 +227,7 @@ namespace game
                 g.pushlist(); // horizontal
             }
 
-            if(!cmode || !cmode->hidefrags())
+            if(!cmode || !cmode->hidefrags() || !hidefrags)
             { 
                 g.pushlist();
                 g.strut(6);
