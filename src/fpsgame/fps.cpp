@@ -862,6 +862,36 @@ namespace game
         }
     }
 
+    VARP(gameclock, 0, 0, 1);
+    FVARP(gameclockscale, 1e-3f, 0.5f, 1e3f);
+    HVARP(gameclockcolour, 0, 0xFFFFFF, 0xFFFFFF);
+    VARP(gameclockalpha, 0, 255, 255);
+    HVARP(gameclocklowcolour, 0, 0xFF0000, 0xFFFFFF);
+    FVARP(gameclockx, 0, 0.900f, 1);
+    FVARP(gameclocky, 0, 0.005f, 1);
+    FVARP(gameclockradarx, 0, 0.765f, 1);
+    FVARP(gameclockradary, 0, 0.015f, 1);
+
+    void drawgameclock(int w, int h)
+    {
+        int secs = max(maplimit-lastmillis, 0)/1000, mins = secs/60;
+        secs %= 60;
+
+        int color = mins < 1 ? gameclocklowcolour : gameclockcolour;
+        bool radar = m_ctf || m_capture || m_collect;
+        vec2 offset = radar ? vec2(gameclockradarx, gameclockradary) : vec2(gameclockx, gameclocky);
+        offset.mul(vec2(w, h).div(gameclockscale));
+
+        pushhudmatrix();
+        hudmatrix.scale(gameclockscale, gameclockscale, 1);
+        flushhudmatrix();
+
+        defformatstring(buf, "%d:%02d", mins, secs);
+        draw_text(buf, int(offset.x), int(offset.y), (color>>16)&0xFF, (color>>8)&0xFF, color&0xFF, gameclockalpha);
+
+        pophudmatrix();
+    }
+
     void gameplayhud(int w, int h)
     {
         pushhudmatrix();
@@ -898,6 +928,8 @@ namespace game
         }
 
         pophudmatrix();
+
+        if (gameclock && !m_edit) drawgameclock(w, h);
     }
 
     int clipconsole(int w, int h)
