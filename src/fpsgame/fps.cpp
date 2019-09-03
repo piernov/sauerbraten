@@ -867,7 +867,7 @@ namespace game
     HVARP(gameclockcolour, 0, 0xFFFFFF, 0xFFFFFF);
     VARP(gameclockalpha, 0, 255, 255);
     HVARP(gameclocklowcolour, 0, 0xFFC040, 0xFFFFFF);
-    VARP(gameclockalign, -1, -1, 1);
+    VARP(gameclockalign, -1, 1, 1);
     FVARP(gameclockx, 0, 0.765f, 1);
     FVARP(gameclocky, 0, 0.015f, 1);
 
