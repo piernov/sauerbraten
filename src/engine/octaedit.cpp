@@ -2428,6 +2428,7 @@ COMMAND(getcurtex, "");
 COMMAND(getseltex, "");
 ICOMMAND(getreptex, "", (), { if(!noedit()) intret(vslots.inrange(reptex) ? reptex : -1); });
 COMMAND(gettexname, "ii");
+ICOMMAND(texloaded, "i", (int *tex), intret(slots.inrange(*tex) && slots[*tex]->loaded ? 1 : 0));
 
 void replacetexcube(cube &c, int oldtex, int newtex)
 {
