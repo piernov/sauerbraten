@@ -9,7 +9,7 @@ struct vec2
         float v[2];
     };
 
-    vec2() = default;
+    vec2() {}
     vec2(float x, float y) : x(x), y(y) {}
     explicit vec2(const vec &v);
     explicit vec2(const vec4 &v);
@@ -74,7 +74,7 @@ struct vec
         float v[3];
     };
 
-    vec() = default;
+    vec() {}
     explicit vec(int a) : x(a), y(a), z(a) {} 
     explicit vec(float a) : x(a), y(a), z(a) {} 
     vec(float a, float b, float c) : x(a), y(b), z(c) {}
@@ -255,7 +255,7 @@ struct vec4
         float v[4];
     };
 
-    vec4() = default;
+    vec4() {}
     explicit vec4(const vec &p, float w = 0) : x(p.x), y(p.y), z(p.z), w(w) {}
     vec4(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
     explicit vec4(const float *v) : x(v[0]), y(v[1]), z(v[2]), w(v[3]) {}
@@ -323,7 +323,7 @@ struct matrix4;
 
 struct quat : vec4
 {
-    quat() = default;
+    quat() {}
     quat(float x, float y, float z, float w) : vec4(x, y, z, w) {}
     quat(const vec &axis, float angle)
     {
@@ -426,7 +426,7 @@ struct dualquat
 {
     quat real, dual;
 
-    dualquat() = default;
+    dualquat() {}
     dualquat(const quat &q, const vec &p) 
         : real(q),
           dual(0.5f*( p.x*q.w + p.y*q.z - p.z*q.y),
@@ -558,7 +558,7 @@ struct matrix3
 {
     vec a, b, c;
 
-    matrix3() = default;
+    matrix3() {}
     matrix3(const vec &a, const vec &b, const vec &c) : a(a), b(b), c(c) {}
     explicit matrix3(float angle, const vec &axis) { rotate(angle, axis); }
     explicit matrix3(const quat &q)
@@ -777,7 +777,7 @@ struct matrix4x3
 {
     vec a, b, c, d;
 
-    matrix4x3() = default;
+    matrix4x3() {}
     matrix4x3(const vec &a, const vec &b, const vec &c, const vec &d) : a(a), b(b), c(c), d(d) {}
     matrix4x3(const matrix3 &rot, const vec &trans) : a(rot.a), b(rot.b), c(rot.c), d(trans) {}
     matrix4x3(const dualquat &dq)
@@ -1001,7 +1001,7 @@ struct plane : vec
     bool operator==(const plane &p) const { return x==p.x && y==p.y && z==p.z && offset==p.offset; }
     bool operator!=(const plane &p) const { return x!=p.x || y!=p.y || z!=p.z || offset!=p.offset; }
 
-    plane() = default;
+    plane() {}
     plane(const vec &c, float off) : vec(c), offset(off) {} 
     plane(const vec4 &p) : vec(p), offset(p.w) {}
     plane(int d, float off)
@@ -1081,7 +1081,7 @@ struct triangle
     vec a, b, c;
 
     triangle(const vec &a, const vec &b, const vec &c) : a(a), b(b), c(c) {}
-    triangle() = default;
+    triangle() {}
 
     triangle &add(const vec &o) { a.add(o); b.add(o); c.add(o); return *this; }
     triangle &sub(const vec &o) { a.sub(o); b.sub(o); c.sub(o); return *this; }
@@ -1125,7 +1125,7 @@ struct ivec
         int v[3];
     };
 
-    ivec() = default;
+    ivec() {}
     explicit ivec(const vec &v) : x(int(v.x)), y(int(v.y)), z(int(v.z)) {}
     ivec(int a, int b, int c) : x(a), y(b), z(c) {}
     ivec(int d, int row, int col, int depth)
@@ -1193,7 +1193,7 @@ struct ivec2
         int v[2];
     };
 
-    ivec2() = default;
+    ivec2() {}
     ivec2(int x, int y) : x(x), y(y) {}
     explicit ivec2(const vec2 &v) : x(int(v.x)), y(int(v.y)) {}
     explicit ivec2(const ivec &v) : x(v.x), y(v.y) {}
@@ -1247,7 +1247,7 @@ struct ivec4
         int v[4];
     };
 
-    ivec4() = default;
+    ivec4() {}
     explicit ivec4(const ivec &p, int w = 0) : x(p.x), y(p.y), z(p.z), w(w) {}
     ivec4(int x, int y, int z, int w) : x(x), y(y), z(z), w(w) {}
     explicit ivec4(const vec4 &v) : x(int(v.x)), y(int(v.y)), z(int(v.z)), w(int(v.w)) {}
@@ -1279,7 +1279,7 @@ struct bvec
         uchar v[3];
     };
 
-    bvec() = default;
+    bvec() {}
     bvec(uchar x, uchar y, uchar z) : x(x), y(y), z(z) {}
     explicit bvec(const vec &v) : x(uchar((v.x+1)*(255.0f/2.0f))), y(uchar((v.y+1)*(255.0f/2.0f))), z(uchar((v.z+1)*(255.0f/2.0f))) {}
     explicit bvec(const bvec4 &v);
@@ -1336,7 +1336,7 @@ struct bvec4
         uint mask;
     };
 
-    bvec4() = default;
+    bvec4() {}
     bvec4(uchar x, uchar y, uchar z, uchar w = 0) : x(x), y(y), z(z), w(w) {}
     bvec4(const bvec &v, uchar w = 0) : x(v.x), y(v.y), z(v.z), w(w) {}
 
@@ -1393,7 +1393,7 @@ struct svec
         short v[3];
     };
 
-    svec() = default;
+    svec() {}
     svec(short x, short y, short z) : x(x), y(y), z(z) {}
     explicit svec(const ivec &v) : x(v.x), y(v.y), z(v.z) {}
 
@@ -1411,7 +1411,7 @@ struct svec2
         short v[2];
     };
 
-    svec2() = default;
+    svec2() {}
     svec2(short x, short y) : x(x), y(y) {}
 
     short &operator[](int i) { return v[i]; }
@@ -1427,7 +1427,7 @@ struct dvec4
 {
     double x, y, z, w;
 
-    dvec4() = default;
+    dvec4() {}
     dvec4(double x, double y, double z, double w) : x(x), y(y), z(z), w(w) {}
     dvec4(const vec4 &v) : x(v.x), y(v.y), z(v.z), w(v.w) {}
 
@@ -1444,7 +1444,7 @@ struct matrix4
 {
     vec4 a, b, c, d;
 
-    matrix4() = default;
+    matrix4() {}
     matrix4(const float *m) : a(m), b(m+4), c(m+8), d(m+12) {}
     matrix4(const vec &a, const vec &b, const vec &c = vec(0, 0, 1))
         : a(a.x, b.x, c.x, 0), b(a.y, b.y, c.y, 0), c(a.z, b.z, c.z, 0), d(0, 0, 0, 1)
@@ -1759,7 +1759,7 @@ struct matrix2
 {
     vec2 a, b;
 
-    matrix2() = default;
+    matrix2() {}
     matrix2(const vec2 &a, const vec2 &b) : a(a), b(b) {}
     explicit matrix2(const matrix4 &m) : a(m.a), b(m.b) {}
     explicit matrix2(const matrix3 &m) : a(m.a), b(m.b) {}
@@ -1769,7 +1769,7 @@ struct squat
 {
     short x, y, z, w;
 
-    squat() = default;
+    squat() {}
     squat(const vec4 &q) { convert(q); }
 
     void convert(const vec4 &q)
