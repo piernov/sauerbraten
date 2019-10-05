@@ -794,6 +794,7 @@ void swapundo(undolist &a, undolist &b, int op)
             n += u->numents ? u->numents : countblock(u->block());
             if(ops > 10 || n > 2500)
             {
+                conoutf(CON_WARN, "undo too big for multiplayer");
                 if(nompedit) { multiplayer(); return; }
                 op = -1;
                 break;
