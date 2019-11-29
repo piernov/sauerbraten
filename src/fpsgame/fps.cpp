@@ -318,6 +318,7 @@ namespace game
             }
         }
     }
+    COMMAND(respawn, "");
 
     // inputs
 
