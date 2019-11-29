@@ -321,10 +321,12 @@ namespace game
 
     // inputs
 
+    VARP(attackspawn, 0, 1, 1);
+
     void doattack(bool on)
     {
         if(!connected || intermission) return;
-        if((player1->attacking = on)) respawn();
+        if((player1->attacking = on) && attackspawn) respawn();
     }
 
     bool canjump()
