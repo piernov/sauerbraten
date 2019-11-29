@@ -330,10 +330,12 @@ namespace game
         if((player1->attacking = on) && attackspawn) respawn();
     }
 
+    VARP(jumpspawn, 0, 1, 1);
+
     bool canjump()
     {
         if(!connected || intermission) return false;
-        respawn();
+        if(jumpspawn) respawn();
         return player1->state!=CS_DEAD;
     }
 
