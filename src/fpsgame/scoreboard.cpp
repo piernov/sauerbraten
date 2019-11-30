@@ -9,6 +9,7 @@ namespace game
     VARP(showpj, 0, 0, 1);
     VARP(showping, 0, 1, 1);
     VARP(showspectators, 0, 1, 1);
+    VARP(showspectatorping, 0, 0, 1);
     VARP(highlightscore, 0, 1, 1);
     VARP(showconnecting, 0, 0, 1);
     VARP(hidefrags, 0, 1, 1);
@@ -316,6 +317,7 @@ namespace game
                 
                 g.pushlist();
                 g.text("spectator", 0xFFFF80, " ");
+                g.strut(13);
                 loopv(spectators) 
                 {
                     fpsent *o = spectators[i];
@@ -328,6 +330,23 @@ namespace game
                     if(o==player1 && highlightscore) g.poplist();
                 }
                 g.poplist();
+
+                if((multiplayer(false) || demoplayback) && showspectatorping)
+                {
+                    g.space(1);
+                    g.pushlist();
+                    g.text("ping", 0xFFFF80);
+                    g.strut(6);
+                    loopv(spectators)
+                    {
+                        fpsent *o = spectators[i];
+                        fpsent *p = o->ownernum >= 0 ? getclient(o->ownernum) : o;
+                        if(!p) p = o;
+                        if(p->state==CS_LAGGED) g.text("LAG", 0xFFFFDD);
+                        else g.textf("%d", 0xFFFFDD, NULL, p->ping);
+                    }
+                    g.poplist();
+                }
 
                 g.space(1);
                 g.pushlist();
