@@ -333,7 +333,6 @@ namespace game
 
                 if((multiplayer(false) || demoplayback) && showspectatorping)
                 {
-                    g.space(1);
                     g.pushlist();
                     g.text("ping", 0xFFFF80);
                     g.strut(6);
