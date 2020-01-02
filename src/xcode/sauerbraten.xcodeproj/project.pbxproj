@@ -678,15 +678,9 @@
 				);
 				INFOPLIST_FILE = sauerbraten.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				OTHER_CPLUSPLUSFLAGS = (
-					"$(OTHER_CFLAGS)",
-					"-stdlib=libc++",
-				);
-				OTHER_LDFLAGS = (
-					"-lz",
-					"-stdlib=libc++",
-				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = sauerbraten;
 			};
 			name = Debug;
@@ -711,15 +705,9 @@
 				);
 				INFOPLIST_FILE = sauerbraten.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				OTHER_CPLUSPLUSFLAGS = (
-					"$(OTHER_CFLAGS)",
-					"-stdlib=libc++",
-				);
-				OTHER_LDFLAGS = (
-					"-lz",
-					"-stdlib=libc++",
-				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = sauerbraten;
 			};
 			name = Release;
@@ -744,15 +732,9 @@
 				);
 				INFOPLIST_FILE = sauerbraten.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				OTHER_CPLUSPLUSFLAGS = (
-					"$(OTHER_CFLAGS)",
-					"-stdlib=libc++",
-				);
-				OTHER_LDFLAGS = (
-					"-lz",
-					"-stdlib=libc++",
-				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = sauerbraten;
 			};
 			name = "Release-Deployment";
@@ -766,7 +748,7 @@
 				ENABLE_OPENMP_SUPPORT = NO;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_OPTIMIZATION_LEVEL = 3;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				STRIP_INSTALLED_PRODUCT = NO;
 			};
@@ -780,7 +762,7 @@
 				ENABLE_OPENMP_SUPPORT = NO;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				STRIP_INSTALLED_PRODUCT = NO;
 				VALID_ARCHS = "i386 ppc ppc64 ppc7400 ppc970 x86_64";
@@ -795,7 +777,7 @@
 				ENABLE_OPENMP_SUPPORT = NO;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_OPTIMIZATION_LEVEL = 3;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				STRIP_INSTALLED_PRODUCT = NO;
 				VALID_ARCHS = "i386 ppc ppc64 ppc7400 ppc970 x86_64";
