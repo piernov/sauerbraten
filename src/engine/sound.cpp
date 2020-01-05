@@ -153,9 +153,41 @@ void stopmusic()
     DELETEP(musicstream);
 }
 
+#ifdef WIN32
+#define AUDIODRIVER "directsound winmm"
+#else
+#define AUDIODRIVER ""
+#endif
+bool shouldinitaudio = true;
+SVARF(audiodriver, AUDIODRIVER, { shouldinitaudio = true; initwarning("sound configuration", INIT_RESET, CHANGE_SOUND); });
+VARF(sound, 0, 1, 1, { shouldinitaudio = true; initwarning("sound configuration", INIT_RESET, CHANGE_SOUND); });
 VARF(soundchans, 1, 32, 128, initwarning("sound configuration", INIT_RESET, CHANGE_SOUND));
 VARF(soundfreq, 0, MIX_DEFAULT_FREQUENCY, 48000, initwarning("sound configuration", INIT_RESET, CHANGE_SOUND));
 VARF(soundbufferlen, 128, 1024, 4096, initwarning("sound configuration", INIT_RESET, CHANGE_SOUND));
+
+bool initaudio()
+{
+    if(SDL_WasInit(SDL_INIT_AUDIO)) SDL_QuitSubSystem(SDL_INIT_AUDIO);
+    if(audiodriver[0])
+    {
+        vector<char*> drivers;
+        explodelist(audiodriver, drivers);
+        loopv(drivers)
+        {
+            SDL_setenv("SDL_AUDIODRIVER", drivers[i], 1);
+            if(SDL_InitSubSystem(SDL_INIT_AUDIO) >= 0)
+            {
+                drivers.deletearrays();
+                return true;
+            }
+        }
+        drivers.deletearrays();
+    }
+    SDL_setenv("SDL_AUDIODRIVER", "", 1);
+    if(SDL_InitSubSystem(SDL_INIT_AUDIO) >= 0) return true;
+    conoutf(CON_ERROR, "sound init failed: %s", SDL_GetError());
+    return false;
+}
 
 void initsound()
 {
@@ -164,8 +196,19 @@ void initsound()
     if(version.major == 2 && version.minor == 0 && version.patch == 6)
     {
         nosound = true;
-        conoutf(CON_ERROR, "audio is broken in SDL 2.0.6");
+        if(sound) conoutf(CON_ERROR, "audio is broken in SDL 2.0.6");
         return;
+    }
+
+    if(shouldinitaudio)
+    {
+        shouldinitaudio = false;
+        if(SDL_WasInit(SDL_INIT_AUDIO)) SDL_QuitSubSystem(SDL_INIT_AUDIO);
+        if(!sound || !initaudio())
+        {
+            nosound = true;
+            return;
+        }
     }
 
     if(Mix_OpenAudio(soundfreq, MIX_DEFAULT_FORMAT, 2, soundbufferlen)<0)
@@ -670,8 +713,7 @@ int playsoundname(const char *s, const vec *loc, int vol, int flags, int loops, 
     return playsound(id, loc, NULL, flags, loops, fade, chanid, radius, expire);
 }
 
-void sound(int *n) { playsound(*n); }
-COMMAND(sound, "i");
+ICOMMAND(sound, "i", (int *n), playsound(*n));
 
 void resetsound()
 {
