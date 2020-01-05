@@ -167,8 +167,14 @@ VARF(soundbufferlen, 128, 1024, 4096, initwarning("sound configuration", INIT_RE
 
 bool initaudio()
 {
-    if(SDL_WasInit(SDL_INIT_AUDIO)) SDL_QuitSubSystem(SDL_INIT_AUDIO);
-    if(audiodriver[0])
+    static string fallback = "";
+    static bool initfallback = true;
+    if(initfallback)
+    {
+        initfallback = false;
+        if(char *env = SDL_getenv("SDL_AUDIODRIVER")) copystring(fallback, env);
+    }
+    if(!fallback[0] && audiodriver[0])
     {
         vector<char*> drivers;
         explodelist(audiodriver, drivers);
@@ -183,7 +189,7 @@ bool initaudio()
         }
         drivers.deletearrays();
     }
-    SDL_setenv("SDL_AUDIODRIVER", "", 1);
+    SDL_setenv("SDL_AUDIODRIVER", fallback, 1);
     if(SDL_InitSubSystem(SDL_INIT_AUDIO) >= 0) return true;
     conoutf(CON_ERROR, "sound init failed: %s", SDL_GetError());
     return false;
