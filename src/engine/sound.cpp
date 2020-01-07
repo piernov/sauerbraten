@@ -160,7 +160,7 @@ void stopmusic()
 #endif
 bool shouldinitaudio = true;
 SVARF(audiodriver, AUDIODRIVER, { shouldinitaudio = true; initwarning("sound configuration", INIT_RESET, CHANGE_SOUND); });
-VARF(sound, 0, 1, 1, { shouldinitaudio = true; initwarning("sound configuration", INIT_RESET, CHANGE_SOUND); });
+VARF(usesound, 0, 1, 1, { shouldinitaudio = true; initwarning("sound configuration", INIT_RESET, CHANGE_SOUND); });
 VARF(soundchans, 1, 32, 128, initwarning("sound configuration", INIT_RESET, CHANGE_SOUND));
 VARF(soundfreq, 0, MIX_DEFAULT_FREQUENCY, 48000, initwarning("sound configuration", INIT_RESET, CHANGE_SOUND));
 VARF(soundbufferlen, 128, 1024, 4096, initwarning("sound configuration", INIT_RESET, CHANGE_SOUND));
@@ -202,7 +202,7 @@ void initsound()
     if(version.major == 2 && version.minor == 0 && version.patch == 6)
     {
         nosound = true;
-        if(sound) conoutf(CON_ERROR, "audio is broken in SDL 2.0.6");
+        if(usesound) conoutf(CON_ERROR, "audio is broken in SDL 2.0.6");
         return;
     }
 
@@ -210,7 +210,7 @@ void initsound()
     {
         shouldinitaudio = false;
         if(SDL_WasInit(SDL_INIT_AUDIO)) SDL_QuitSubSystem(SDL_INIT_AUDIO);
-        if(!sound || !initaudio())
+        if(!usesound || !initaudio())
         {
             nosound = true;
             return;
