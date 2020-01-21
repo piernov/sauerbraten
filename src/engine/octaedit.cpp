@@ -2280,6 +2280,12 @@ void vcolor(float *r, float *g, float *b)
     mpeditvslot(usevdelta, ds, allfaces, sel, true);
 }
 COMMAND(vcolor, "fff");
+ICOMMAND(getvcolor, "i", (int *tex),
+{
+    VSlot &vslot = lookupvslot(*tex, false);
+    defformatstring(str, "%s %s %s", floatstr(vslot.colorscale.r), floatstr(vslot.colorscale.g), floatstr(vslot.colorscale.b));
+    result(str);
+});
 
 void vreset()
 {
