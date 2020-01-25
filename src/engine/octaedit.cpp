@@ -1523,7 +1523,7 @@ void pastehilite()
 
 void paste()
 {
-    if(noedit()) return;
+    if(noedit(true)) return;
     mppaste(localedit, sel, true);
 }
 
