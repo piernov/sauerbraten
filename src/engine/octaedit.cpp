@@ -2060,7 +2060,7 @@ void mpdelcube(selinfo &sel, bool local)
 
 void delcube()
 {
-    if(noedit()) return;
+    if(noedit(true)) return;
     mpdelcube(sel, true);
 }
 
