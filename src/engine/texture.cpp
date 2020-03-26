@@ -8,6 +8,11 @@
   #include "SDL_image.h"
 #endif
 
+#ifndef SDL_IMAGE_VERSION_ATLEAST
+#define SDL_IMAGE_VERSION_ATLEAST(X, Y, Z) \
+    (SDL_VERSIONNUM(SDL_IMAGE_MAJOR_VERSION, SDL_IMAGE_MINOR_VERSION, SDL_IMAGE_PATCHLEVEL) >= SDL_VERSIONNUM(X, Y, Z))
+#endif
+
 template<int BPP> static void halvetexture(uchar * RESTRICT src, uint sw, uint sh, uint stride, uchar * RESTRICT dst)
 {
     for(uchar *yend = &src[sh*stride]; src < yend;)
@@ -3462,7 +3467,7 @@ void saveimage(const char *filename, int format, ImageData &image, bool flip = f
             {
                 switch(format) {
                     case IMG_JPG:
-#if defined(SDL_IMAGE_VERSION_ATLEAST) && SDL_IMAGE_VERSION_ATLEAST(2, 0, 2)
+#if SDL_IMAGE_VERSION_ATLEAST(2, 0, 2)
                         IMG_SaveJPG_RW(s, f->rwops(), 1, screenshotquality);
 #else
                         conoutf(CON_ERROR, "JPG screenshot support requires SDL_image 2.0.2");
