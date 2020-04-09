@@ -1618,11 +1618,7 @@ namespace game
                     fpsent *d = getclient(cn);
                     entities::pickupeffects(i, d);
                 }
-                else if(entities::ents.inrange(i))
-                {
-                    entities::setspawn(i, true);
-                    ai::itemspawned(i);
-                }
+                else entities::setspawn(i, true);
                 break;
             }
 
