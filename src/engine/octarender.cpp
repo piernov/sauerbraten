@@ -495,6 +495,8 @@ struct vacollect : verthash
             }
         }
 
+        va->alphatris = va->alphabacktris + va->alphafronttris;
+
         if(grasstris.length())
         {
             va->grasstris.move(grasstris);
@@ -1220,7 +1222,7 @@ vtxarray *newva(const ivec &co, int size)
     vc.setupdata(va);
 
     wverts += va->verts;
-    wtris  += va->tris + va->blends + va->alphabacktris + va->alphafronttris;
+    wtris  += va->tris + va->blends + va->alphatris;
     allocva++;
     valist.add(va);
 
@@ -1230,7 +1232,7 @@ vtxarray *newva(const ivec &co, int size)
 void destroyva(vtxarray *va, bool reparent)
 {
     wverts -= va->verts;
-    wtris -= va->tris + va->blends + va->alphabacktris + va->alphafronttris;
+    wtris -= va->tris + va->blends + va->alphatris;
     allocva--;
     valist.removeobj(va);
     if(!va->parent) varoot.removeobj(va);
