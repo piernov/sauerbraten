@@ -1771,7 +1771,11 @@ void allchanged(bool load)
     clearvas(worldroot);
     resetqueries();
     resetclipplanes();
-    if(load) initenvmaps();
+    if(load)
+    {
+        setupsky();
+        initenvmaps();
+    }
     guessshadowdir();
     entitiesinoctanodes();
     tjoints.setsize(0);
