@@ -1349,6 +1349,8 @@ namespace game
 
             case N_MAPCHANGE:
                 getstring(text, p);
+                filtertext(text, text, false);
+                fixmapname(text);
                 changemapserv(text, getint(p));
                 mapchanged = true;
                 if(getint(p)) entities::spawnitems();
