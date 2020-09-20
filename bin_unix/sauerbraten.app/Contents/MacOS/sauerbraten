@@ -1,0 +1,16 @@
+#!/bin/sh
+SDL_SINGLEDISPLAY=1
+SDL_ENABLEAPPEVENTS=1
+SAUERBRATEN_ORIGPW=`pwd`
+SAUERBRATEN_APPDIR=$(dirname "$0")
+cd "${SAUERBRATEN_APPDIR}"
+if [ -e "../Resources/data/defaults.cfg" ]; then
+    cd "../Resources"
+    ${SAUERBRATEN_APPDIR}/sauerbraten_universal $@
+elif [ -e "../../../../data/defaults.cfg" ]; then
+    cd "../../../.."
+    ${SAUERBRATEN_APPDIR}/sauerbraten_universal $@
+elif [ -e "sauerbraten_universal" ]; then
+    ./sauerbraten_universal $@
+fi
+cd "${SAUERBRATEN_ORIGPW}"
