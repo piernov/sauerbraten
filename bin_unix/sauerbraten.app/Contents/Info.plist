@@ -26,6 +26,5 @@
 	<string>1.0.0</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.5.0</string>
-    <false/>
 </dict>
 </plist>

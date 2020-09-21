@@ -5,11 +5,11 @@ SAUERBRATEN_ORIGPW=`pwd`
 SAUERBRATEN_APPDIR=$(dirname "$0")
 cd "${SAUERBRATEN_APPDIR}"
 if [ -e "../Resources/data/defaults.cfg" ]; then
-    cd "../Resources"
-    ${SAUERBRATEN_APPDIR}/sauerbraten_universal $@
+    cd "../Resources" # we are an app package
+    ../MacOS/sauerbraten_universal $@
 elif [ -e "../../../../data/defaults.cfg" ]; then
-    cd "../../../.."
-    ${SAUERBRATEN_APPDIR}/sauerbraten_universal $@
+    cd "../../../.." # we are being run in place
+    ./bin_unix/sauerbraten.app/Contents/MacOS/sauerbraten_universal $@
 elif [ -e "sauerbraten_universal" ]; then
     ./sauerbraten_universal $@
 fi
