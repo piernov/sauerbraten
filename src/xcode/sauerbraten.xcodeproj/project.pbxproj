@@ -638,7 +638,7 @@
 				DEPLOYMENT_LOCATION = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
-					../../bin_unix/sauerbraten.app/Contents/Frameworks,
+					../../sauerbraten.app/Contents/Frameworks,
 					"$(USER_LIBRARY_DIR)/Frameworks",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
 				);
@@ -678,7 +678,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
-					../../bin_unix/sauerbraten.app/Contents/Frameworks,
+					../../sauerbraten.app/Contents/Frameworks,
 					"$(USER_LIBRARY_DIR)/Frameworks",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
 				);
@@ -703,7 +703,7 @@
 				);
 				OTHER_LDFLAGS = (
 					"-lz",
-					"-L../../bin_unix/sauerbraten.app/Contents/Frameworks",
+					"-L../../sauerbraten.app/Contents/Frameworks",
 				);
 				PRODUCT_NAME = sauerbraten;
 				SDKROOT = macosx;
