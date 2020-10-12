@@ -251,6 +251,51 @@
         <li><b>skrsp1</b> <i>by Skur</i></li>
         <li><b>crnsp1</b> <i>by crun</i></li>
     </ul>
+    <li>multiplayer vslots in coop-edit</li>
+    <li>multiplayer undo in coop-edit</li>
+    <li>removed fixed-function rendering path and instead always use GLSL render path</li>
+    <li>updated to SDL 2</li>
+    <li>added "texrotate" modes 6 &amp; 7 for transposing textures</li>
+    <li>added "envmapbb" var for boxed envmap radius instead of spherical</li>
+    <li>added support for alpha mask texture on alpha geometry</li>
+    <li>added "getselpos" &amp; "setselpos" &amp; "movesel" for scripting edit selection</li>
+    <li>added "getv*" commands for querying vslot information</li>
+    <li>added "contags" var to control edit var spam</li>
+    <li>added "editcamdir" var to control whether ents take their yaw from camera</li>
+    <li>added atmospheric scattering shader for sky ("atmo")</li> 
+    <li>revamped spawn system that tries to intelligently select spawns</li>
+    <li>flag can now be dropped up to 3 times in CTF modes instead of only once</li>
+    <li>revamped timer in hold mode so that teammates can recover the timer if flag is recovered</li>
+    <li>revamped health boost</li>
+    <li>added colors to health hud ("healthcolors")</li>
+    <li>added max health to hud</li>
+    <li>added "hidefrags" var to control whether frags are shown in scoreboard for CTF/capture modes</li>
+    <li>added "showdeaths" var to control whether deaths are shown in scoreboard</li>
+    <li>added "jumpspawn" &amp; "attackspawn" vars to control whether jump and attack actions try to respawn if dead</li>
+    <li>added "respawn" command to explicitly request a respawn when dead</li>
+    <li>added "showping" mode 2 for showing pj compactly</li> 
+    <li>added "hidedead" mode 2 for hiding enemy deaths but not player's</li>
+    <li>"getdemo" now supports specifying a demo name</li>
+    <li>added "demodir" var for specifying where demos are saved</li>
+    <li>added "autorecorddemo" server var to control whether server automatically records demos</li>
+    <li>added "modifiedmapspectator" server var to control if players who have modified the map should be forced to spectate</li>
+    <li>added "persistteams" server var to toggle autoteam</li>
+    <li>added "overtime" server var to optionally enable overtime behavior when score is tied</li>
+    <li>added "regenbluearmour" server var to toggle blue armour in regen-capture</li>
+    <li>2D guis now always render over the HUD</li>
+    <li>added "minimizedsounds" var to control whether sounds play when window is minimized</li>
+    <li>added "audiodriver" var for overriding SDL sound driver selection</li>
+    <li>allow max "soundfreq" of 48k</li>
+    <li>made "maxsoundradius" read-only</li>
+    <li>chat names are now team colored ("teamcolorchat")</li>
+    <li>added optional ammobar hud ("ammobar")</li>
+    <li>added optional score hud ("hudscore")</li>
+    <li>added optional game clock hud ("gameclock")</li>
+    <li>show status icons over players ("statusicons")</li>
+    <li>show health status bars for teammates ("statusbars")</li>
+    <li>added support for JPEG screenshots</li>
+    <li>added many new textures and skyboxes</li>
+    <li>countless bug fixes</li>
 </ul>
 
 <h2 id="_2013_01_04_collect_edition">2013_01_04_collect_edition</h2>
