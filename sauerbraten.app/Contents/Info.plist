@@ -11,7 +11,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.dot3labs.sauerbraten</string>
 	<key>CFBundleExecutable</key>
-	<string>sauebraten</string>
+	<string>sauerbraten</string>
 	<key>CFBundleIconFile</key>
 	<string>sauerbraten</string>
 	<key>CFBundleInfoDictionaryVersion</key>
