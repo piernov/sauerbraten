@@ -8,7 +8,6 @@ SAUER_HOME="${HOME}/Library/Application Support/Sauerbraten"
 
 SDL_SINGLEDISPLAY=1
 SDL_ENABLEAPPEVENTS=1
-SAUER_ORIGPW=`pwd`
 SAUER_APPDIR=$(dirname "$0")
 
 cd "${SAUER_APPDIR}"
@@ -24,5 +23,3 @@ else
 fi
 
 exec ${SAUER_BIN}/sauerbraten_universal ${SAUER_OPTIONS} -q"${SAUER_HOME}" $@
-
-cd "${SAUER_ORIGPW}"
