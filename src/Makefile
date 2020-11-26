@@ -164,7 +164,7 @@ MASTER_OBJS= \
 SERVER_MASTER_OBJS= $(SERVER_OBJS) $(filter-out $(SERVER_OBJS),$(MASTER_OBJS))
 
 ifneq (,$(findstring DARWIN,$(PLATFORM)))
-CLIENT_OBJS+= xcode/macutils.o xcode/SDLMain.o
+CLIENT_OBJS+= xcode/macutils.o
 
 %.o: %.mm
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
