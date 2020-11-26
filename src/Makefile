@@ -212,6 +212,9 @@ install: all
 else
 client:	libenet $(CLIENT_OBJS)
 	$(CXX) $(CXXFLAGS) -o sauer_client $(CLIENT_OBJS) $(CLIENT_LIBS)
+ifneq (,$(findstring DARWIN,$(PLATFORM)))
+	install_name_tool -add_rpath @executable_path/../Frameworks sauer_client
+endif
 
 server:	libenet $(SERVER_OBJS)
 	$(CXX) $(CXXFLAGS) -o sauer_server $(SERVER_OBJS) $(SERVER_LIBS)
@@ -225,12 +228,17 @@ shared/cube2font.o: shared/cube2font.c
 cube2font: shared/cube2font.o
 	$(CXX) $(CXXFLAGS) -o cube2font shared/cube2font.o `freetype-config --libs` -lz
 
+ifneq (,$(findstring DARWIN,$(PLATFORM)))
+install: client
+	cp sauer_client ../sauerbraten.app/Contents/MacOS/sauerbraten_universal
+else
 install: all
 	cp sauer_client	../bin_unix/$(PLATFORM_PREFIX)_client
 	cp sauer_server	../bin_unix/$(PLATFORM_PREFIX)_server
 ifneq (,$(STRIP))
 	$(STRIP) ../bin_unix/$(PLATFORM_PREFIX)_client
 	$(STRIP) ../bin_unix/$(PLATFORM_PREFIX)_server
+endif
 endif
 endif
 
