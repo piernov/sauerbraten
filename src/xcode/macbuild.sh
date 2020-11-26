@@ -13,7 +13,7 @@ while [ -n "$1" ]; do
    chmod +x ../sauerbraten.app/Contents/MacOS/sauerbraten_universal
    ;;
   package)
-   exec package.sh
+   exec ./package.sh
    ;;
  esac
  shift
