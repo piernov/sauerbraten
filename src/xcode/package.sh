@@ -30,6 +30,7 @@ ditto "$SAUER_HOME/src" "$SAUERPKG/src"
 find -d "$SAUERPKG" -name ".svn" -exec rm -rf {} \;
 find "$SAUERPKG" -name ".DS_Store" -exec rm -f {} \;
 rm -rf "$SAUERPKG/src/xcode/build"
+ln -sf /Applications "$SAUERPKG/Applications"
 
 #finally make a disk image out of the stuff
 echo creating dmg
