@@ -2759,8 +2759,9 @@ COMMAND(editmat, "ss");
 
 extern int menudistance, menuautoclose;
 
-VARP(texguiwidth, 1, 16, 1000);
+VARP(texguiwidth, 1, 15, 1000);
 VARP(texguiheight, 1, 8, 1000);
+FVARP(texguiscale, 0.1f, 1.5f, 10.0f);
 VARP(texguitime, 0, 15, 1000);
 
 static int lastthumbnail = 0;
@@ -2801,13 +2802,13 @@ struct texturegui : g3d_callback
                         {
                             if(totalmillis-lastthumbnail<texguitime)
                             {
-                                g.texture(dummyvslot, 1.0, false); //create an empty space
+                                g.texture(dummyvslot, texguiscale, false); //create an empty space
                                 continue;
                             }
                             loadthumbnail(slot);
                             lastthumbnail = totalmillis;
                         }
-                        int ret = g.texture(vslot, 1.0f, true);
+                        int ret = g.texture(vslot, texguiscale, true);
                         if(ret&G3D_ROLLOVER) texguitex = ti;
                         if(ret&G3D_UP && (slot.loaded || slot.thumbnail!=notexture))
                         {
@@ -2817,7 +2818,7 @@ struct texturegui : g3d_callback
                     }
                     else
                     {
-                        g.texture(dummyvslot, 1.0, false); //create an empty space
+                        g.texture(dummyvslot, texguiscale, false); //create an empty space
                     }
                 }
                 g.poplist();
