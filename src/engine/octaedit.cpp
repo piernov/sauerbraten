@@ -2763,11 +2763,12 @@ VARP(texguiwidth, 1, 15, 1000);
 VARP(texguiheight, 1, 8, 1000);
 FVARP(texguiscale, 0.1f, 1.5f, 10.0f);
 VARP(texguitime, 0, 15, 1000);
+VARP(texguiname, 0, 1, 1);
 
 static int lastthumbnail = 0;
 
 VARP(texgui2d, 0, 1, 1);
-VAR(texguitex, 1, -1, 0);
+VAR(texguinum, 1, -1, 0);
 
 struct texturegui : g3d_callback
 {
@@ -2780,12 +2781,14 @@ struct texturegui : g3d_callback
     void gui(g3d_gui &g, bool firstpass)
     {
         int origtab = menutab, numtabs = max((slots.length() + texguiwidth*texguiheight - 1)/(texguiwidth*texguiheight), 1);
-        if(!firstpass) texguitex = -1;
+        if(!firstpass) texguinum = -1;
         g.start(menustart, 0.04f, &menutab);
+        bool oldautotab = g.allowautotab(false);
         loopi(numtabs)
         {
             g.tab(!i ? "Textures" : NULL, 0xFFDD88);
             if(i+1 != origtab) continue; //don't load textures on non-visible tabs!
+            Slot *rollover = NULL;
             loop(h, texguiheight)
             {
                 g.pushlist();
@@ -2809,7 +2812,7 @@ struct texturegui : g3d_callback
                             lastthumbnail = totalmillis;
                         }
                         int ret = g.texture(vslot, texguiscale, true);
-                        if(ret&G3D_ROLLOVER) texguitex = ti;
+                        if(ret&G3D_ROLLOVER) { rollover = &slot; texguinum = ti; }
                         if(ret&G3D_UP && (slot.loaded || slot.thumbnail!=notexture))
                         {
                             edittex(vslot.index);
@@ -2823,7 +2826,17 @@ struct texturegui : g3d_callback
                 }
                 g.poplist();
             }
+            if(texguiname)
+            {
+                if(rollover)
+                {
+                    defformatstring(name, "%d : %s", texguinum, rollover->sts[0].name);
+                    g.title(name, 0xFFDD88);
+                }
+                else g.space(1);
+            }
         }
+        g.allowautotab(oldautotab);
         g.end();
     }
 
@@ -2837,7 +2850,7 @@ struct texturegui : g3d_callback
             menupos = menuinfrontofplayer();
             menustart = starttime();
         }
-        else texguitex = -1;
+        else texguinum = -1;
     }
 
     void show()
@@ -2845,7 +2858,7 @@ struct texturegui : g3d_callback
         if(!menuon) return;
         filltexlist();
         extern int usegui2d;
-        if(!editmode || ((!texgui2d || !usegui2d) && camera1->o.dist(menupos) > menuautoclose)) { menuon = false; texguitex = -1; }
+        if(!editmode || ((!texgui2d || !usegui2d) && camera1->o.dist(menupos) > menuautoclose)) { menuon = false; texguinum = -1; }
         else g3d_addgui(this, menupos, texgui2d ? GUI_2D : 0);
     }
 } gui;
