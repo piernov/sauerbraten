@@ -1252,6 +1252,11 @@ void pasteblock(block3 &b, selinfo &sel, bool local)
     sel.orient = o;
 }
 
+bool prefabloaded(const char *name)
+{
+    return prefabs.access(name) != NULL;
+}
+
 prefab *loadprefab(const char *name, bool msg = true)
 {
    prefab *b = prefabs.access(name);
