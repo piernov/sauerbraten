@@ -2766,6 +2766,7 @@ VARP(texguitime, 0, 15, 1000);
 static int lastthumbnail = 0;
 
 VARP(texgui2d, 0, 1, 1);
+VAR(texguitex, 1, -1, 0);
 
 struct texturegui : g3d_callback
 {
@@ -2778,8 +2779,8 @@ struct texturegui : g3d_callback
     void gui(g3d_gui &g, bool firstpass)
     {
         int origtab = menutab, numtabs = max((slots.length() + texguiwidth*texguiheight - 1)/(texguiwidth*texguiheight), 1);
+        if(!firstpass) texguitex = -1;
         g.start(menustart, 0.04f, &menutab);
-        Slot *rollover = NULL;
         loopi(numtabs)
         {
             g.tab(!i ? "Textures" : NULL, 0xFFDD88);
@@ -2807,7 +2808,7 @@ struct texturegui : g3d_callback
                             lastthumbnail = totalmillis;
                         }
                         int ret = g.texture(vslot, 1.0f, true);
-                        if(ret&G3D_ROLLOVER) rollover = &slot;
+                        if(ret&G3D_ROLLOVER) texguitex = ti;
                         if(ret&G3D_UP && (slot.loaded || slot.thumbnail!=notexture))
                         {
                             edittex(vslot.index);
@@ -2821,20 +2822,21 @@ struct texturegui : g3d_callback
                 }
                 g.poplist();
             }
-            g.title(rollover ? rollover->sts[0].name : "", 0xFFDD88);
         }
         g.end();
     }
 
     void showtextures(bool on)
     {
-        if(on != menuon && (menuon = on))
+        if(on == menuon) return;
+        if((menuon = on))
         {
             if(menustart <= lasttexmillis)
                 menutab = 1+clamp(lookupvslot(lasttex, false).slot->index, 0, slots.length()-1)/(texguiwidth*texguiheight);
             menupos = menuinfrontofplayer();
             menustart = starttime();
         }
+        else texguitex = -1;
     }
 
     void show()
@@ -2842,7 +2844,7 @@ struct texturegui : g3d_callback
         if(!menuon) return;
         filltexlist();
         extern int usegui2d;
-        if(!editmode || ((!texgui2d || !usegui2d) && camera1->o.dist(menupos) > menuautoclose)) menuon = false;
+        if(!editmode || ((!texgui2d || !usegui2d) && camera1->o.dist(menupos) > menuautoclose)) { menuon = false; texguitex = -1; }
         else g3d_addgui(this, menupos, texgui2d ? GUI_2D : 0);
     }
 } gui;
