@@ -2830,7 +2830,7 @@ struct texturegui : g3d_callback
             {
                 if(rollover)
                 {
-                    defformatstring(name, "%d : %s", texguinum, rollover->sts[0].name);
+                    defformatstring(name, "%d \f7:\fc %s", texguinum, rollover->sts[0].name);
                     g.title(name, 0xFFDD88);
                 }
                 else g.space(1);
