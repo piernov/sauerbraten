@@ -16,10 +16,10 @@ struct menu : g3d_callback
 {
     char *name, *header;
     uint *contents, *init, *onclear;
-    bool showtab;
+    bool showtab, keeptab;
     int menutab;
 
-    menu() : name(NULL), header(NULL), contents(NULL), init(NULL), onclear(NULL), showtab(true), menutab(1) {}
+    menu() : name(NULL), header(NULL), contents(NULL), init(NULL), onclear(NULL), showtab(true), keeptab(false), menutab(1) {}
 
     void gui(g3d_gui &g, bool firstpass)
     {
@@ -153,7 +153,7 @@ void pushgui(menu *m, int pos = -1)
     else guistack.insert(pos, m);
     if(pos < 0 || pos==guistack.length()-1)
     {
-        m->menutab = 1;
+        if(!m->keeptab) m->menutab = 1;
         menustart = totalmillis;
     }
     if(m->init) execute(m->init);
@@ -586,7 +586,7 @@ COMMAND(guionclear, "s");
 COMMAND(guistayopen, "e");
 COMMAND(guinoautotab, "e");
 COMMAND(guimerge, "e");
-
+ICOMMAND(guikeeptab, "b", (int *keeptab), if(guistack.length()) guistack.last()->keeptab = *keeptab!=0);
 COMMAND(guilist, "e");
 COMMAND(guialign, "ie");
 COMMAND(guititle, "s");
