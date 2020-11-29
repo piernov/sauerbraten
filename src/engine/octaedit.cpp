@@ -2779,9 +2779,10 @@ struct texturegui : g3d_callback
     {
         int origtab = menutab, numtabs = max((slots.length() + texguiwidth*texguiheight - 1)/(texguiwidth*texguiheight), 1);
         g.start(menustart, 0.04f, &menutab);
+        Slot *rollover = NULL;
         loopi(numtabs)
         {
-            g.tab(!i ? "Textures" : NULL, 0xAAFFAA);
+            g.tab(!i ? "Textures" : NULL, 0xFFDD88);
             if(i+1 != origtab) continue; //don't load textures on non-visible tabs!
             loop(h, texguiheight)
             {
@@ -2805,7 +2806,9 @@ struct texturegui : g3d_callback
                             loadthumbnail(slot);
                             lastthumbnail = totalmillis;
                         }
-                        if(g.texture(vslot, 1.0f, true)&G3D_UP && (slot.loaded || slot.thumbnail!=notexture))
+                        int ret = g.texture(vslot, 1.0f, true);
+                        if(ret&G3D_ROLLOVER) rollover = &slot;
+                        if(ret&G3D_UP && (slot.loaded || slot.thumbnail!=notexture))
                         {
                             edittex(vslot.index);
                             hudshader->set();
@@ -2818,6 +2821,7 @@ struct texturegui : g3d_callback
                 }
                 g.poplist();
             }
+            g.title(rollover ? rollover->sts[0].name : "", 0xFFDD88);
         }
         g.end();
     }
