@@ -5,9 +5,6 @@ SAUER_OPTIONS=""
 
 # SAUER_HOME is where Sauerbraten should store user files.
 SAUER_HOME="${HOME}/Library/Application Support/Sauerbraten"
-
-SDL_SINGLEDISPLAY=1
-SDL_ENABLEAPPEVENTS=1
 SAUER_APPDIR=$(dirname "$0")
 
 cd "${SAUER_APPDIR}"
