@@ -352,7 +352,7 @@ extern float rayent(const vec &o, const vec &ray, float radius, int mode, int si
 VAR(gridlookup, 0, 0, 1);
 VAR(passthroughcube, 0, 1, 1);
 VAR(passthroughent, 0, 1, 1);
-VARF(passthrough, 0, 0, 1, { passthroughsel = passthrough; entcancel(); if(passthroughent) setvar("entediting", passthrough ? 0 : 1); });
+VARF(passthrough, 0, 0, 1, { passthroughsel = passthrough; entcancel(); });
 
 void rendereditcursor()
 {
@@ -393,7 +393,7 @@ void rendereditcursor()
 
         wdist = rayent(player->o, camdir, 1e16f,
                        (editmode && showmat ? RAY_EDITMAT : 0)   // select cubes first
-                       | (!dragging && entediting ? RAY_ENTS : 0)
+                       | (!dragging && entediting && (!passthrough || !passthroughent) ? RAY_ENTS : 0)
                        | RAY_SKIPFIRST
                        | (passthroughcube || passthrough ? RAY_PASS : 0), gridsize, entorient, ent);
 
